@@ -365,7 +365,7 @@ function checkCollisions() {
 }
 
 function showEnd() {
-    document.getElementsByTagName('body')[0].style = 'background: #E8E8E8';
+    document.getElementsByTagName('body')[0].style = 'background: #000';
     document.getElementById('gg').style = 'display:block';
     stopped = true;
 }

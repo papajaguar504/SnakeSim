@@ -30,9 +30,12 @@
             touch-action: none;
         }
         body {
-            background: #E1F0F5;
+            background: #000;
             font-family: monospace;
             touch-action: none;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
         }
         #score, #gg {
             font-size: 2em;
@@ -43,23 +46,29 @@
             padding: 10px 0px;
         }
         #container {
-            width: 1080px;
-            margin: 10px auto;
+            width: 100vw;
+            height: 100vh;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         #leaderboard_area {
             font-size: 1.2em;
+            display: none;
         }
     	canvas {
-    		border: 1px black solid;
     		display: block;
-            background: #FFF;
+            width: min(100vw, 100vh);
+            height: auto;
     	}
         #gg {
-            width: 1080px;
+            width: 100%;
             display: none;
             position: absolute;
-            top: 600px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         /* hide reCaptcha badge */
         .grecaptcha-badge {
@@ -71,13 +80,7 @@
         }
 
         #mobile_controls {
-            position: relative;
-            user-select: none;
-            -webkit-user-select: none; /* Safari, Chrome, iOS Safari */
-            -moz-user-select: none;    /* Firefox */
-            -ms-user-select: none;     /* Internet Explorer/Edge */
-            height: 10px;
-            top: -300px;
+            display: none;
         }
 
         .button {
@@ -121,8 +124,16 @@
             background-color: #67bfff;
         }
 
+        #score {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            padding: 10px 14px;
+            z-index: 10;
+        }
+
         #refresh {
-            color: #0093fc;
+            color: #fff;
             cursor: pointer;
             text-decoration: underline;
         }
