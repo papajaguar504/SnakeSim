@@ -1,5 +1,6 @@
 // Angle representing the radius of one snake node.
-var NODE_ANGLE = Math.PI / 60;
+// Reduced by 3x to make the playable sphere diameter 3x larger.
+var NODE_ANGLE = Math.PI / 180;
 
 // This is the number of positions stored in the node queue.
 // This determines the velocity.
@@ -27,7 +28,7 @@ var collisionDistance = 2 * Math.sin(NODE_ANGLE);
 // The angle of the current snake direction in radians.
 var direction = STARTING_DIRECTION;
 
-var focalLength = 200;
+var focalLength = 600;
 
 var leftDown, rightDown;
 
