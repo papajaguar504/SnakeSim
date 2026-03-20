@@ -185,7 +185,7 @@ function init() {
     regeneratePellet();
     updateSnakeVelocity(false);
 
-    var n = 40;
+    var n = 30;
     for (var i = 0; i < n; i++) {
         for (var j = 0; j < n; j++) {
             points.push(
@@ -193,7 +193,7 @@ function init() {
         }
     }
     snake = [];
-    for (var i = 0; i < 8; i++) addSnakeNode();
+    for (var i = 0; i < 3; i++) addSnakeNode();
     window.requestAnimationFrame(update);
 }
 
