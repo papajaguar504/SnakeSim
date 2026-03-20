@@ -176,6 +176,7 @@ function init() {
     ctx = cnv.getContext('2d');
     width = cnv.width;
     height = cnv.height;
+    focalLength = Math.min(width, height) * 0.9 / (2 * 0.58);
     centerX = width / 2;
     centerY = height / 2;
     points = [];
