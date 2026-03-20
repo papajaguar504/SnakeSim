@@ -248,9 +248,7 @@ function drawPoint(point, radius, red) {
 
     // Transparent based on depth.
     var alpha = 1 - (p.z - 1) / 2;
-    // Color based on depth.
-    var depthColor = 255 - Math.floor((p.z - 1) / 2 * 255);
-    ctx.fillStyle = "rgba(" + red + ", 0, " + depthColor + ", " + alpha + ")";
+    ctx.fillStyle = "rgba(255, 255, 255, " + alpha + ")";
     ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
     ctx.fill();
 }
@@ -279,7 +277,7 @@ function render() {
 
     // Draw circle.
     ctx.beginPath();
-    ctx.strokeStyle = "rgb(0,0,0)";
+    ctx.strokeStyle = "rgb(255,255,255)";
 
     // The radius value was determined experimentally.
     // TODO: figure out the math behind this.
