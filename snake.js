@@ -16,8 +16,9 @@ var accumulatedDelta = 0; // How much delta time is built up.
 // An array of snake nodes.
 var snake;
 
-// Point representing the pellet to eat.
-var pellet;
+// Points representing pellets to eat.
+var pellets = [];
+var pelletCount = 1;
 
 var snakeVelocity;
 
@@ -33,6 +34,8 @@ var focalLength = 600;
 var leftDown, rightDown;
 
 var score = 0;
+var pelletCountSlider = document.querySelector("#pellet_count");
+var pelletCountValue = document.querySelector("#pellet_count_value");
 
 const btnMoveLeft = document.querySelector("#move_left");
 function setLeft(val) {
@@ -111,8 +114,21 @@ document.querySelector("#refresh").addEventListener("click", (e) => {
     window.location.reload(true);
 })
 
-function regeneratePellet() {
-    pellet = pointFromSpherical(Math.random() * Math.PI * 2, Math.random() * Math.PI);
+function generatePellet() {
+    return pointFromSpherical(Math.random() * Math.PI * 2, Math.random() * Math.PI);
+}
+
+function updatePelletCountDisplay() {
+    pelletCountValue.innerHTML = pelletCount;
+}
+
+function syncPelletCount() {
+    while (pellets.length < pelletCount) {
+        pellets.push(generatePellet());
+    }
+    while (pellets.length > pelletCount) {
+        pellets.pop();
+    }
 }
 
 function pointFromSpherical(theta, phi) {
@@ -165,7 +181,7 @@ function incrementScore() {
 }
 
 function allPoints() {
-    var allPoints = [pellet].concat(points).concat(snake);
+    var allPoints = pellets.concat(points).concat(snake);
     for (var i = 0; i < snake.length; i++)
         allPoints = allPoints.concat(snake[i].posQueue);
     return allPoints;
@@ -183,7 +199,9 @@ function init() {
     clock = Date.now();
     leftDown = false;
     rightDown = false;
-    regeneratePellet();
+    pelletCount = Number(pelletCountSlider.value);
+    updatePelletCountDisplay();
+    syncPelletCount();
     updateSnakeVelocity(false);
 
     var n = 30;
@@ -263,7 +281,9 @@ function render() {
         drawPoint(snake[i], NODE_ANGLE, 120);
     }
 
-    drawPoint(pellet, NODE_ANGLE, 0);
+    for (var i = 0; i < pellets.length; i++) {
+        drawPoint(pellets[i], NODE_ANGLE, 0);
+    }
 
     // Draw angle.
     ctx.beginPath();
@@ -356,10 +376,13 @@ function checkCollisions() {
              return;
          }
     }
-    if (collision(snake[0], pellet)) {
-        regeneratePellet();
-        addSnakeNode();
-        incrementScore();
+    for (var i = 0; i < pellets.length; i++) {
+        if (collision(snake[0], pellets[i])) {
+            pellets[i] = generatePellet();
+            addSnakeNode();
+            incrementScore();
+            break;
+        }
     }
 }
 
@@ -368,5 +391,11 @@ function showEnd() {
     document.getElementById('gg').style = 'display:block';
     stopped = true;
 }
+
+pelletCountSlider.addEventListener("input", function() {
+    pelletCount = Number(pelletCountSlider.value);
+    updatePelletCountDisplay();
+    syncPelletCount();
+});
 
 init();
